@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import Http404
 
-# Create your views here.
-posts = [
+POSTS = [
     {
         'id': 0,
         'location': 'Остров отчаянья',
@@ -45,29 +44,27 @@ posts = [
     },
 ]
 
+POSTS_DICT = {post['id']: post for post in POSTS}
+
 
 def index(request):
     template = 'blog/index.html'
-    try:
-        context = {'posts': reversed(posts)}
-    except IndexError:
-        return HttpResponseNotFound('<h1>404 Page not found</h1>')
-
+    context = {'posts': reversed(POSTS)}
     return render(request, template, context)
 
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    try:
-        context = {'post': posts[post_id]}
-    except IndexError:
-        return HttpResponseNotFound('<h1>404 Page not found</h1>')
+    post = POSTS_DICT.get(post_id)
+    if post is None:
+        raise Http404('Ошибка 500. Страница не найдена')
+    context = {'post': post}
     return render(request, template, context)
 
 
 def category_posts(request, category_slug):
     filtered_posts = [
-        post for post in posts if post['category'] == category_slug
+        post for post in POSTS if post['category'] == category_slug
     ]
     context = {'posts': filtered_posts, 'category_slug': category_slug}
     return render(request, 'blog/category.html', context)
