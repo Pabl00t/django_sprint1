@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
-from typing import List, Any
+from typing import Any
 
 posts: list[dict[str, Any]] = [
     {
