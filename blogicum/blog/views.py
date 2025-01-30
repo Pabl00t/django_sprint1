@@ -1,6 +1,7 @@
+from typing import Any
+
 from django.shortcuts import render
 from django.http import Http404
-from typing import Any
 
 posts: list[dict[str, Any]] = [
     {
@@ -56,10 +57,9 @@ def index(request):
 
 def post_detail(request, post_id):
     template = 'blog/detail.html'
-    post = POSTS_DICT.get(post_id)
-    if post is None:
-        raise Http404('Ошибка 500. Страница не найдена')
-    context = {'post': post}
+    if post_id not in POSTS_DICT:
+        raise Http404('Страница не найдена')
+    context = {'post': POSTS_DICT[post_id]}
     return render(request, template, context)
 
 
