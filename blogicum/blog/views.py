@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import Http404
+from typing import List, Any
 
-posts = [
+posts: list[dict[str, Any]] = [
     {
         'id': 0,
         'location': 'Остров отчаянья',
