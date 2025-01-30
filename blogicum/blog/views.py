@@ -44,12 +44,12 @@ posts = [
     },
 ]
 
-POSTS_DICT = {post['id']: post for post in POSTS}
+POSTS_DICT = {post['id']: post for post in posts}
 
 
 def index(request):
     template = 'blog/index.html'
-    context = {'posts': reversed(POSTS)}
+    context = {'posts': reversed(posts)}
     return render(request, template, context)
 
 
@@ -64,7 +64,7 @@ def post_detail(request, post_id):
 
 def category_posts(request, category_slug):
     filtered_posts = [
-        post for post in POSTS if post['category'] == category_slug
+        post for post in posts if post['category'] == category_slug
     ]
     context = {'posts': filtered_posts, 'category_slug': category_slug}
     return render(request, 'blog/category.html', context)
