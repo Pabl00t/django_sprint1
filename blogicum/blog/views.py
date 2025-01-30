@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404
 
-POSTS = [
+posts = [
     {
         'id': 0,
         'location': 'Остров отчаянья',
